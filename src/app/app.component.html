@@ -1,8 +1,8 @@
 <div class="container text-center">
-  <div class="row pt-5">
-    <div class="col-6 bg-info border">
+  <div class="row pt-md-5">
+    <div class="col-md-6 bg-info border">
       <form (ngSubmit)="onFormSubmit(f)" #f="ngForm">
-        <h1><u>Add to the List</u></h1>
+        <h1 class="p-2"><u>Add to the List</u></h1>
         <input type="text"
                class="mt-4 form-control"
                autocomplete="off"
@@ -16,12 +16,16 @@
         </button>
       </form>
     </div>
-    <div class="col-6 bg-light border pb-4">
-      <h1><u>The Evil List!</u></h1>
+    <div *ngIf="!isFetching" class="col-md-6 bg-light border pb-4">
+      <h1 class="p-2"><u>The Evil List!</u></h1>
       <app-to-do-thing
         *ngFor="let task of completeTaskList"
         [TaskInfo]="task">
       </app-to-do-thing>
+    </div>
+    <div *ngIf="isFetching" class="col-md-6 bg-light border pb-4">
+      <h1 class="p-2"><u>The Evil List!</u></h1>
+      <p>Loading from Firebase...</p>
     </div>
   </div>
 </div>

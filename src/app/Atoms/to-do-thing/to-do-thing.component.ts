@@ -14,4 +14,8 @@ export class ToDoThingComponent {
   toggleTask() {
     this.taskListService.toggleTaskCompletion(this.TaskInfo.name);
   }
+
+  deleteTask() {
+    this.taskListService.deleteTask(this.TaskInfo.name);
+  }
 }

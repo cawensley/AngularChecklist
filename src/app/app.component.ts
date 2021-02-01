@@ -10,15 +10,18 @@ import {Subscription} from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy {
   completeTaskList;
+  isFetching = false;
   TaskSubscription: Subscription;
 
   constructor(private taskListService: TaskListService) {}
 
   ngOnInit() {
-    this.completeTaskList = this.taskListService.getToDoList();
+    this.isFetching = true;
     this.TaskSubscription = this.taskListService.ToDoListChanged.subscribe((newTaskList) => {
       this.completeTaskList = newTaskList;
     });
+    this.taskListService.getToDoList();
+    this.isFetching = false;
   }
 
   onFormSubmit(form: NgForm) {
