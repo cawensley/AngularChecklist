@@ -1,22 +1,32 @@
-import { Component } from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import { NgForm } from '@angular/forms';
+import {TaskListService} from './services/TaskList.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  CompleteToDoList = [
-    {name: 'Get KFC for dinner', complete: false},
-    {name: 'Buy GME', complete: false},
-    {name: 'Get Valentines Day Card', complete: false},
-    {name: 'Walk the Dog', complete: false},
-  ];
+export class AppComponent implements OnInit, OnDestroy {
+  completeTaskList;
+  TaskSubscription: Subscription;
 
-  onFormSubmit(form: NgForm): void {
-    const newTaskName = form.value.name;
-    this.CompleteToDoList.push({name: newTaskName, complete: false});
+  constructor(private taskListService: TaskListService) {}
+
+  ngOnInit() {
+    this.completeTaskList = this.taskListService.getToDoList();
+    this.TaskSubscription = this.taskListService.ToDoListChanged.subscribe((newTaskList) => {
+      this.completeTaskList = newTaskList;
+    });
+  }
+
+  onFormSubmit(form: NgForm) {
+    this.taskListService.addTaskToList(form.value.name);
     form.reset();
+  }
+
+  ngOnDestroy() {
+    this.TaskSubscription.unsubscribe();
   }
 }

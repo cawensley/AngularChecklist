@@ -1,9 +1,9 @@
 <button class="btn border d-flex align-items-center hoverColor" (click)="this.toggleTask()">
-  <input type="checkbox" [checked]="TaskCompleted">
+  <input type="checkbox" [checked]="TaskInfo.complete">
   <div
     class="pl-2"
-    [ngStyle]="{color: TaskCompleted ? 'blue' : 'red'}"
-    [ngClass]="{'strikethrough': TaskCompleted}">
+    [ngStyle]="{color: TaskInfo.complete ? 'blue' : 'red'}"
+    [ngClass]="{'strikethrough': TaskInfo.complete}">
   {{TaskInfo.name}}
   </div>
 </button>
