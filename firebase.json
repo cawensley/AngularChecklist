@@ -1,6 +1,5 @@
 {
-  "hosting": [
-    {
+  "hosting": {
       "public": "dist/AngularChecklist",
       "ignore": [
         "firebase.json",
@@ -12,14 +11,8 @@
           "source": "**",
           "destination": "/index.html"
         }
-      ]
-    },
-    {
-      "target": "AngularChecklist",
-      "public": "dist/AngularChecklist",
-      "ignore": [
-        "**/.*"
       ],
+      "target": "AngularChecklist",
       "headers": [
         {
           "source": "*.[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].+(css|js)",
@@ -30,13 +23,6 @@
             }
           ]
         }
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
       ]
     }
-  ]
 }

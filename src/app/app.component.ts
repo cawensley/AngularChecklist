@@ -10,7 +10,7 @@ import {AuthService} from './services/Auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  completeTaskList;
+  completeTaskList = [] as any;
   userInfo = null;
   isFetching = false;
   TaskSubscription: Subscription;
@@ -25,8 +25,8 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     this.UserSubscription = this.authService.UserInfoChanged.subscribe((userData) => {
       this.userInfo = userData;
+      this.taskListService.getToDoList();
     });
-    this.taskListService.getToDoList();
     this.isFetching = false;
   }
 
