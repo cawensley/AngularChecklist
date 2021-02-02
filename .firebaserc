@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "angularchecklist-ee44b"
+  },
+  "targets": {
+    "angularchecklist-ee44b": {
+      "hosting": {
+        "AngularChecklist": [
+          "angularchecklist-ee44b"
+        ]
+      }
+    }
+  }
+}

@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { ToDoThingComponent } from './Atoms/to-do-thing/to-do-thing.component';
 import { TaskListService } from './services/TaskList.service';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { AuthService } from './services/Auth.service';
 
 @NgModule({
   declarations: [
@@ -15,8 +18,9 @@ import { TaskListService } from './services/TaskList.service';
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
-  providers: [TaskListService],
+  providers: [TaskListService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
