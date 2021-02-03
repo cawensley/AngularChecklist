@@ -7,13 +7,14 @@ import {AuthService} from './Auth.service';
 @Injectable()
 export class TaskListService {
   ToDoListChanged = new Subject();
+  webURL = 'https://angularchecklist-ee44b-default-rtdb.firebaseio.com/tasks';
 
   private CompleteToDoList = [];
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getToDoList() {
-    this.http.get(`https://angularchecklist-ee44b-default-rtdb.firebaseio.com/tasks/${this.authService.getUserID()}.json`)
+    this.http.get(`${this.webURL}/${this.authService.getUserID()}.json`)
       .pipe(
         map(responseData => {
           const tasksArray = [];
@@ -32,9 +33,8 @@ export class TaskListService {
   }
 
   addTaskToList(newTaskName) {
-    this.http.post(`https://angularchecklist-ee44b-default-rtdb.firebaseio.com/tasks/${this.authService.getUserID()}.json`,
-      {name: newTaskName, complete: false})
-      .subscribe((taskID) => {
+    this.http.post(`${this.webURL}/${this.authService.getUserID()}.json`,
+      {name: newTaskName, complete: false}).subscribe((taskID) => {
         // @ts-ignore
         this.CompleteToDoList.push({name: newTaskName, complete: false, id: taskID.name});
         this.ToDoListChanged.next(this.CompleteToDoList.slice());
@@ -43,9 +43,7 @@ export class TaskListService {
 
   deleteTask(oldTaskName) {
     const TaskInfo = this.CompleteToDoList.filter((task) => (task.name === oldTaskName))[0];
-    this.http.delete(
-      `https://angularchecklist-ee44b-default-rtdb.firebaseio.com/tasks/${this.authService.getUserID()}/${TaskInfo.id}.json`)
-      .subscribe();
+    this.http.delete(`${this.webURL}/${this.authService.getUserID()}/${TaskInfo.id}.json`).subscribe();
     this.CompleteToDoList = this.CompleteToDoList.filter((task) => (task.name !== oldTaskName));
     this.ToDoListChanged.next(this.CompleteToDoList.slice());
   }
@@ -58,7 +56,7 @@ export class TaskListService {
     });
     this.ToDoListChanged.next(this.CompleteToDoList.slice());
     const TaskInfo = this.CompleteToDoList.filter((task) => (task.name === TaskName))[0];
-    this.http.put(`https://angularchecklist-ee44b-default-rtdb.firebaseio.com/tasks/${this.authService.getUserID()}/${TaskInfo.id}.json`,
+    this.http.put(`${this.webURL}/${this.authService.getUserID()}/${TaskInfo.id}.json`,
       {name: TaskInfo.name, complete: TaskInfo.complete}).subscribe();
   }
 }

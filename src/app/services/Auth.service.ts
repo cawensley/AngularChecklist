@@ -1,27 +1,26 @@
 import {Injectable} from '@angular/core';
 import firebase from 'firebase/app';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {Subject} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
   private UserInfo;
-  UserInfoChanged = new Subject();
 
-  constructor(public auth: AngularFireAuth) {}
+  constructor(public auth: AngularFireAuth, private router: Router) {}
 
   login() {
     this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((user) => {
       this.UserInfo = user.additionalUserInfo.profile;
       localStorage.setItem('TaskUserData', JSON.stringify(this.UserInfo));
-      this.UserInfoChanged.next(this.UserInfo);
+      this.router.navigate(['tasks']);
     });
   }
 
   autoLogin() {
     this.UserInfo = JSON.parse(localStorage.getItem('TaskUserData'));
     if (this.UserInfo) {
-      this.UserInfoChanged.next(this.UserInfo);
+      this.router.navigate(['tasks']);
     }
   }
 
@@ -29,7 +28,7 @@ export class AuthService {
     this.auth.signOut();
     this.UserInfo = null;
     localStorage.removeItem('TaskUserData');
-    this.UserInfoChanged.next(this.UserInfo);
+    this.router.navigate(['']);
   }
 
   getUserID() {
