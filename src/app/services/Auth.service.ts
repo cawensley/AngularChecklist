@@ -38,4 +38,10 @@ export class AuthService {
     } else { return null; }
   }
 
+  getUserName() {
+    if (this.UserInfo) {
+      return this.UserInfo.name;
+    } else { return null; }
+  }
+
 }

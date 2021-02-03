@@ -1,0 +1,36 @@
+<div class="container text-center">
+  <app-header></app-header>
+  <div class="row">
+    <div class="col-md-6 bg-info border">
+      <form (ngSubmit)="onFormSubmit(f)" #f="ngForm">
+        <h1 class="p-2"><u>Add to the List</u></h1>
+        <input type="text"
+               class="mt-4 form-control"
+               autocomplete="off"
+               placeholder="Enter New Task Here"
+               ngModel
+               required
+               id="name"
+               name="name">
+        <button class="m-2 btn btn-success border border-dark" type="submit" [disabled]="!f.valid">
+          Add!
+        </button>
+      </form>
+    </div>
+    <div *ngIf="!isFetching" class="col-md-6 bg-light border pb-4">
+      <h1 class="p-2"><u>The List!</u></h1>
+      <app-to-do-thing
+        *ngFor="let task of completeTaskList"
+        [TaskInfo]="task">
+      </app-to-do-thing>
+      <div *ngIf="this.completeTaskList.length === 0" class="border border-danger mt-4">
+        <div>No Tasks to List</div>
+        <div>Please Enter Tasks</div>
+      </div>
+    </div>
+    <div *ngIf="isFetching" class="col-md-6 bg-light border pb-4">
+      <h1 class="p-2"><u>The List!</u></h1>
+      <p>Loading from Firebase...</p>
+    </div>
+  </div>
+</div>
