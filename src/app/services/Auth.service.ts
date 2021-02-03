@@ -13,13 +13,22 @@ export class AuthService {
   login() {
     this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((user) => {
       this.UserInfo = user.additionalUserInfo.profile;
+      localStorage.setItem('TaskUserData', JSON.stringify(this.UserInfo));
       this.UserInfoChanged.next(this.UserInfo);
     });
+  }
+
+  autoLogin() {
+    this.UserInfo = JSON.parse(localStorage.getItem('TaskUserData'));
+    if (this.UserInfo) {
+      this.UserInfoChanged.next(this.UserInfo);
+    }
   }
 
   logout() {
     this.auth.signOut();
     this.UserInfo = null;
+    localStorage.removeItem('TaskUserData');
     this.UserInfoChanged.next(this.UserInfo);
   }
 

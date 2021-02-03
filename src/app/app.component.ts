@@ -27,6 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.userInfo = userData;
       this.taskListService.getToDoList();
     });
+    this.authService.autoLogin();
     this.isFetching = false;
   }
 
