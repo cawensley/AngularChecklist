@@ -24,6 +24,10 @@ export class TasksPageComponent implements OnInit, OnDestroy {
     this.isFetching = false;
   }
 
+  sortTasksFunction() {
+    this.taskListService.SortList();
+  }
+
   onFormSubmit(form: NgForm) {
     this.taskListService.addTaskToList(form.value.name);
     form.reset();

@@ -19,6 +19,7 @@
     </div>
     <div *ngIf="!isFetching" class="col-md-6 bg-light border pb-4">
       <h1 class="p-2"><u>The List!</u></h1>
+      <button class="btn btn-success" (click)="sortTasksFunction()">Sort Alphabetically</button>
       <app-to-do-thing
         *ngFor="let task of completeTaskList"
         [TaskInfo]="task">

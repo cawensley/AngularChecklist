@@ -13,6 +13,23 @@ export class TaskListService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
+  SortList() {
+    function nameAscend(a, b) {
+      const NameA = a.name.toUpperCase();
+      const NameB = b.name.toUpperCase();
+
+      let comparison = 0;
+      if (NameA > NameB) {
+        comparison = 1;
+      } else if (NameA < NameB) {
+        comparison = -1;
+      }
+      return comparison;
+    }
+    this.CompleteToDoList = this.CompleteToDoList.sort(nameAscend);
+    this.ToDoListChanged.next(this.CompleteToDoList.slice());
+  }
+
   getToDoList() {
     this.http.get(`${this.webURL}/${this.authService.getUserID()}.json`)
       .pipe(
@@ -29,7 +46,8 @@ export class TaskListService {
       .subscribe(tasks => {
         this.CompleteToDoList = tasks;
         this.ToDoListChanged.next(this.CompleteToDoList.slice());
-      });
+      }
+      );
   }
 
   addTaskToList(newTaskName) {
